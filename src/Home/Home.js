@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 function Home() {
     return (
@@ -12,7 +12,7 @@ function Home() {
                     Hamburger Menu of Writers on this blog w/ their posts truncated under their names
                 </section>
             </main>
-            <footer role="content-info">Footer</footer>
+            <footer>Footer</footer>
         </div>
     )
 }

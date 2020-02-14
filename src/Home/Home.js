@@ -1,39 +1,31 @@
-import React from 'react';
-import Menu from '../Menu/Menu'
+import React, { Component } from 'react';
+import Menu from '../Menu/Menu';
+import ApiContext from '../ApiContext';
 
-
-const testWriters = [
-    {name: "Quinn", articles:[1,2,3]},
-    {name: "Sean", articles: [4, 5, 6]}
-]
-
-// const constructWriters = function(writers, articles) {
-//     writers.map(function(writer) {
-
-//     })
-// }
-
-function Home() {
-    return (
-        <div>
-            <main role="main">
-                <header role="banner">
-                    <h1>How to Stop Smiling.<br/>A blog</h1>
-                </header>
-                <div className="Writer-Menu">
-                    {testWriters.map(writer => {
-                        return (
-                            <Menu 
-                                name={writer.name}
-                                articles={writer.articles}
-                            />
-                        )
-                    })}
-                </div>
-            </main>
-            <footer>Footer</footer>
-        </div>
-    )
+class Home extends Component {
+    static contextType = ApiContext
+    
+    render() {
+        return(
+            <div>
+                <main role="main">
+                    <header role="banner">
+                        <h1>How to Stop Smiling.<br/>A blog</h1>
+                    </header>
+                    <div className="Writer-Menu">
+                        {this.context.users.map((user, key) => {
+                            if (user.writer) {
+                                return <Menu key={key} user={user}/>
+                            } else {
+                                return null
+                            }
+                        })}
+                    </div>
+                </main>
+                <footer>Footer</footer>
+            </div>
+        )
+    }
 }
 
 export default Home;

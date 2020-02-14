@@ -1,60 +1,59 @@
-import React from 'react';
+import React, { Component } from 'react';
+import ApiContext from '../ApiContext';
 
+class NewBlogPost extends Component {
 
+    static contextType = ApiContext;
 
-class NewBlogPost extends React.Component {
-    
-    handleSubmit = (e) => {
+    handleSubmitNewBlog = (e) => {
         e.preventDefault();
-
-        // fetch(`${config.API_ENDPOINT}/blogposts/`, {
-        //     method: 'POST',
-        //     headers: {
-        //       'content-type': 'application/json'
-        //     },
-        //     body: JSON.stringify({title, id, content, modified})
-        //   })
-        //   .then(res => {
-        //     if (!res.ok)
-        //       return res.json().then(e => Promise.reject(e))
-        //     return res.json()
-        //   })
-        //   .then((data) => {
-        //     this.context.addNote({ name, folderId, content, modified, id:data.id  })
-        //     this.props.history.push('/')
-        //   }).catch(error => {
-        //     console.error({ error })
-        //   })
+        const blogPost = {
+            "id": 100000, //placeholder, the api will handle iterating the id
+            "title": this.refs.blogTitle.value,
+            "modified": "2019-01-03T00:00:00.000Z", //placeholder
+            "authorId": this.context.loggedInUser.id,
+            "content": this.refs.blogContent.value
+        }
+        this.context.addBlogPost(blogPost)
+        this.props.history.push('/')
     }
 
     render() {
-    return (
-        <div className="newBlogPost_div">
-            <header>
-                <h1>New Blog Post</h1>
-            </header>
-            <section>
-                <form id="new-blog-post" onSubmit={(e) => {
-                    this.handleSubmit(e)
-                }}>
-                    <div class="title_div">
-                        <label for="blog_post_title">Blog title</label>
-                        <input  type="text" 
-                                name="blog_title" 
-                                placeholder="'My Next Blog Post'" 
-                                required />
-                    </div>
-                    <br />
-                    <div class="content_div">
-                            <label for="content">Content</label>
-                            <textarea name="content" rows="15" required />
-                    </div>
 
+        return (
+            <div className="newBlogPost_div">
+                <header>
+                    <h1>New Blog Post</h1>
+                </header>
+                <section>
+                    <form id="new-blog-post" onSubmit={(e) => {
+                        debugger
+                        this.handleSubmitNewBlog(e)
+                    }}>
+                        {console.log("context", this.context)}
+                        <div className="title_div">
+                            <label>Blog title</label>
+                            <input type="text"
+                                name="blog_title"
+                                placeholder="'My Next Blog Post'"
+                                ref="blogTitle"
+                                required />
+                        </div>
+                        <br />
+                        <div className="content_div">
+                            <label>Content</label>
+                            <textarea
+                                name="content"
+                                rows="15"
+                                ref="blogContent"
+                                required />
+                        </div>
                         <button type="submit">Submit</button>
-                </form>
-            </section>
-        </div>
-            )
-        }}
-        
+                    </form>
+                </section>
+            </div>
+        )
+    }
+}
+
 export default NewBlogPost;

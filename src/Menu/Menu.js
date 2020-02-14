@@ -1,27 +1,35 @@
-import React from 'react';
+import React, { Component } from 'react';
 import MenuItem from './MenuItem'
+import ApiContext from '../ApiContext';
 
+class Menu extends Component {
+    static contextType = ApiContext
 
+    capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
 
-
-function Menu(props) {
-    const name = props.name;
-    const articles = props.articles;
-    return (
-        <div className="writer__menu">
-            <label for="writer__name">{name}</label>
-            <ul>
-                {articles.map(article => {
-                    return (
-                        <MenuItem
-                            article={article}
-                        />
-
-                    )
-                })}
-            </ul>
-        </div>
-    )
+    render() {
+        return (
+            <div className="writer__menu">
+                <label>{this.capitalizeFirstLetter(this.props.user.name)}</label>
+                <ul>
+                    {this.context.articles.map((article, key) => {
+                        if (this.props.user.id === article.authorId) {
+                            return (
+                                <MenuItem
+                                    key={key}
+                                    article={article}      
+                                />
+                            ) 
+                        } else {
+                            return null
+                        }
+                    })}
+                </ul>
+            </div>
+        )
+    }
 }
 
 export default Menu;

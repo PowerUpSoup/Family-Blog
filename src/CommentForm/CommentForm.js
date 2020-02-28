@@ -1,20 +1,41 @@
 import React, { Component } from 'react';
+import config from '../config';
 import ApiContext from '../ApiContext';
 
 class CommentForm extends Component {
 
     static contextType = ApiContext;
 
+    formatDateTime() {
+        const today = new Date();
+        const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        const dateTime = date+' '+time;
+        return dateTime
+      }
+
     handleSubmitComment = (e, articleid) => {
         e.preventDefault();
         const comment = {
-            "id": 1000000, //this is a placeholder as the API will later handle iterating the id
             "commentorid": this.context.loggedInUser.id,
             "articleid": articleid,
             "content": this.refs.comment.value,
-            "modified": "2018-06-16T23:00:00.000Z"
+            "modified": `${this.formatDateTime()}`,
         }
-        this.context.addComment(comment)
+        fetch(`${config.API_BASE_URL}/comments`, {
+            method: 'post',
+            headers: { 'content-Type': 'application/json' },
+            body: JSON.stringify({ commentorid:comment.commentorid, articleid:comment.articleid, content:comment.content, modified: comment.modified })
+        }).then(res => {
+            if (!res.ok)
+                return res.json().then(e => Promise.reject(e))
+            return res.json()
+        })
+            .then((data) => {
+                this.context.addComment(data)
+            }).catch(error => {
+                console.error({ error })
+            })
     }
 
     render() {

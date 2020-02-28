@@ -8,7 +8,7 @@ class Comment extends React.Component {
                 {this.props.comment.content}
                 </div>
                 <div>
-                    Posted at {this.props.comment.modified}
+                    Posted at {this.props.comment.date_created}
                 </div>
             </div>
         )

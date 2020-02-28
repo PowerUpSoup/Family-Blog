@@ -15,7 +15,7 @@ class Menu extends Component {
                 <label>{this.capitalizeFirstLetter(this.props.user.name)}</label>
                 <ul>
                     {this.context.articles.map((article, key) => {
-                        if (this.props.user.id === article.authorId) {
+                        if (this.props.user.id === article.authorid) {
                             return (
                                 <MenuItem
                                     key={key}

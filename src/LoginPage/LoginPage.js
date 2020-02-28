@@ -1,4 +1,5 @@
 import React from 'react';
+import config from '../config';
 import ApiContext from '../ApiContext';
 
 class LoginPage extends React.Component {
@@ -27,15 +28,28 @@ class LoginPage extends React.Component {
         const passwordFirst = this.refs.createPasswordFirst.value;
         const passwordSecond = this.refs.createPasswordSecond.value;
         const newUser = {
-            "id": 1000000, //placeholder, the api will handle iteration
             "name": username,
             "writer": false,
             "admin": false,
             "password": passwordFirst
         }
         if (passwordFirst === passwordSecond) {
-            this.context.addNewUser(newUser)
-            this.props.history.push('/')
+            fetch(`${config.API_BASE_URL}/users`, {
+                method: 'post',
+                headers: { 'content-Type': 'application/json' },
+                body: JSON.stringify({ name:newUser.name, writer:newUser.writer, admin:newUser.admin, password:newUser.password })
+            }).then(res => {
+                if (!res.ok)
+                    return res.json().then(e => Promise.reject(e))
+                return res.json()
+            })
+                .then((data) => {
+                    //this.context.addNewUser({name, writer, admin, password, id:data.id, datecreated:data.date_created})
+                    this.context.addNewUser(data)
+                    this.props.history.push('/')
+                }).catch(error => {
+                    console.error({ error })
+                })
         } else {
             return null //would like to display an error message in the form, don't know how to do that
         }

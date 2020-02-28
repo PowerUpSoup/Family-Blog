@@ -1,22 +1,43 @@
 import React, { Component } from 'react';
+import config from '../config';
 import ApiContext from '../ApiContext';
 
 class NewBlogPost extends Component {
 
     static contextType = ApiContext;
 
+    formatDateTime() {
+        const today = new Date();
+        const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        const dateTime = date+' '+time;
+        return dateTime
+      }
+
     handleSubmitNewBlog = (e) => {
         e.preventDefault();
         const blogPost = {
-            "id": 100000, //placeholder, the api will handle iterating the id
             "title": this.refs.blogTitle.value,
-            "modified": "2019-01-03T00:00:00.000Z", //placeholder
-            "authorId": this.context.loggedInUser.id,
+            "modified": `${this.formatDateTime()}`,
+            "authorid": this.context.loggedInUser.id,
             "content": this.refs.blogContent.value
         }
-        this.context.addBlogPost(blogPost)
-        this.props.history.push('/')
-    }
+        fetch(`${config.API_BASE_URL}/articles`, {
+            method: 'post',
+            headers: { 'content-Type': 'application/json' },
+            body: JSON.stringify({ title:blogPost.title, modified:blogPost.modified, authorid:blogPost.authorid, content:blogPost.content })
+        }).then(res => {
+            if (!res.ok)
+                return res.json().then(e => Promise.reject(e))
+            return res.json()
+        })
+            .then((data) => {
+                this.context.addBlogPost(data)
+                this.props.history.push('/')
+            }).catch(error => {
+                console.error({ error })
+            })
+        }
 
     render() {
 

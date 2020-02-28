@@ -1,16 +1,15 @@
+
 import React, { Component } from 'react';
 import Home from './Home/Home';
 import LoginPage from './LoginPage/LoginPage'
 import NewBlogPost from './NewBlogPost/NewBlogPost';
 import BlogContent from './BlogContentPage/BlogContent';
 import ApiContext from './ApiContext';
-import { STORE } from './dummy-store';
 import { Route, Link } from 'react-router-dom';
-
+import config from './config';
 import './App.css';
 
 class App extends Component {
-
   state = {
     users: [],
     articles: [],
@@ -18,6 +17,32 @@ class App extends Component {
     loggedInUser: null,
     isLoggedIn: false
   };
+
+  componentDidMount() {
+    console.log("componentDidMount")
+    Promise.all([
+      fetch(`${config.API_BASE_URL}/users`),
+      fetch(`${config.API_BASE_URL}/articles`),
+      fetch(`${config.API_BASE_URL}/comments`)
+    ])
+      .then(([usersRes, articlesRes, commentsRes]) => {
+
+        if (!usersRes.ok)
+          return usersRes.json().then(e => Promise.reject(e));
+        if (!articlesRes.ok)
+          return articlesRes.json().then(e => Promise.reject(e));
+        if (!commentsRes.ok)
+          return commentsRes.json().then(e => Promise.reject(e));
+
+        return Promise.all([usersRes.json(), articlesRes.json(), commentsRes.json()]);
+      })
+      .then(([users, articles, comments]) => {
+        this.setState({ users, articles, comments });
+      })
+      .catch(error => {
+        console.error({ error });
+      });
+  }
 
   logOutUser() {
     this.setState({
@@ -28,7 +53,7 @@ class App extends Component {
 
   addComment = comment => {
     this.setState({
-      comment: this.state.comments.push(comment) 
+      comment: this.state.comments.push(comment)
     })
   }
 
@@ -48,18 +73,12 @@ class App extends Component {
 
   updateLoggedInUser = loggedInUser => {
     this.setState({
-      loggedInUser: loggedInUser, 
+      loggedInUser: loggedInUser,
       isLoggedIn: true
     })
   }
 
-  componentDidMount() {
-    const users = STORE.users;
-    const articles = STORE.articles;
-    const comments = STORE.comments;
-    this.setState({ users, articles, comments })
 
-  }
 
   renderNewBlogPostNavButton() {
     if ((this.state.isLoggedIn) && (this.state.loggedInUser.writer)) {
@@ -70,9 +89,6 @@ class App extends Component {
   }
 
   render() {
-    
-    console.log(this.state.loggedInUser)
-    
     const value = {
       users: this.state.users,
       articles: this.state.articles,
@@ -85,13 +101,15 @@ class App extends Component {
       addBlogPost: this.addBlogPost
     }
 
+    console.log("userstate", this.state.loggedInUser, this.state.isLoggedIn)
+
     return (
       <ApiContext.Provider value={value}>
         <div className="App">
           <nav className="App_nav">
             <Link to='/'>Home</Link>
             {this.renderNewBlogPostNavButton()}
-            {this.state.isLoggedIn 
+            {this.state.isLoggedIn
               ? (<Link to="/" onClick={() => this.logOutUser()}>Logout</Link>)
               : (<Link className="login_link" to='/login'>Login</Link>)}
           </nav>

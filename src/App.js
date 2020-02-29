@@ -19,7 +19,10 @@ class App extends Component {
   };
 
   componentDidMount() {
-    console.log("componentDidMount")
+    if (this.state.isLoggedIn === false) {
+      
+    }
+
     Promise.all([
       fetch(`${config.API_BASE_URL}/users`),
       fetch(`${config.API_BASE_URL}/articles`),
@@ -37,21 +40,12 @@ class App extends Component {
         return Promise.all([usersRes.json(), articlesRes.json(), commentsRes.json()]);
       })
       .then(([users, articles, comments]) => {
-        this.setState({ users, articles, comments });
+        let sessionStorageUser = sessionStorage.getItem("user")
+        this.setState({ users, articles, comments, isLoggedIn: !!sessionStorageUser, loggedInUser: sessionStorageUser });
       })
       .catch(error => {
         console.error({ error });
       });
-  }
-
-  isLoggedIn() {
-    if (this.state.isLoggedIn === false) {
-      let sessionStorageUser = sessionStorage.getItem("user")
-      if(sessionStorageUser) {
-        this.updateLoggedInUser(sessionStorageUser)
-      }
-    }
-    return this.state.isLoggedIn
   }
 
   logOutUser() {
@@ -119,7 +113,7 @@ class App extends Component {
           <nav className="App_nav">
             <Link to='/'>Home</Link>
             {this.renderNewBlogPostNavButton()}
-            {this.isLoggedIn()
+            {this.state.isLoggedIn
               ? (<Link to="/" onClick={() => this.logOutUser()}>Logout</Link>)
               : (<Link className="login_link" to='/login'>Login</Link>)}
           </nav>

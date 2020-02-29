@@ -19,9 +19,6 @@ class App extends Component {
   };
 
   componentDidMount() {
-    if (this.state.isLoggedIn === false) {
-      
-    }
 
     Promise.all([
       fetch(`${config.API_BASE_URL}/users`),
@@ -40,7 +37,7 @@ class App extends Component {
         return Promise.all([usersRes.json(), articlesRes.json(), commentsRes.json()]);
       })
       .then(([users, articles, comments]) => {
-        let sessionStorageUser = sessionStorage.getItem("user")
+        let sessionStorageUser = JSON.parse(sessionStorage.getItem("user"))
         this.setState({ users, articles, comments, isLoggedIn: !!sessionStorageUser, loggedInUser: sessionStorageUser });
       })
       .catch(error => {

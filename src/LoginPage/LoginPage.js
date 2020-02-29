@@ -15,6 +15,7 @@ class LoginPage extends React.Component {
         this.user = users.find(user => username === user.name) || ("Invalid Username or Password")
         if (this.user.password === password) {
             this.context.updateLoggedInUser(this.user)
+            sessionStorage.setItem("user", this.user)
             this.props.history.push('/')
         } else {
             return (null)

@@ -44,6 +44,16 @@ class App extends Component {
       });
   }
 
+  isLoggedIn() {
+    if (this.state.isLoggedIn === false) {
+      let sessionStorageUser = sessionStorage.getItem("user")
+      if(sessionStorageUser) {
+        this.updateLoggedInUser(sessionStorageUser)
+      }
+    }
+    return this.state.isLoggedIn
+  }
+
   logOutUser() {
     this.setState({
       loggedInUser: null,
@@ -109,7 +119,7 @@ class App extends Component {
           <nav className="App_nav">
             <Link to='/'>Home</Link>
             {this.renderNewBlogPostNavButton()}
-            {this.state.isLoggedIn
+            {this.state.isLoggedIn()
               ? (<Link to="/" onClick={() => this.logOutUser()}>Logout</Link>)
               : (<Link className="login_link" to='/login'>Login</Link>)}
           </nav>

@@ -83,7 +83,7 @@ class App extends Component {
 
   renderNewBlogPostNavButton() {
     if ((this.state.isLoggedIn) && (this.state.loggedInUser.writer)) {
-      return <Link to='/new-blog-post'>New blog post</Link>
+      return <Link to='/new-blog-post'>New blog post     </Link>
     } else {
       return null
     }
@@ -108,7 +108,7 @@ class App extends Component {
       <ApiContext.Provider value={value}>
         <div className="App">
           <nav className="App_nav">
-            <Link to='/'>Home</Link>
+            <Link to='/'>Home  </Link>
             {this.renderNewBlogPostNavButton()}
             {this.state.isLoggedIn
               ? (<Link to="/" onClick={() => this.logOutUser()}>Logout</Link>)

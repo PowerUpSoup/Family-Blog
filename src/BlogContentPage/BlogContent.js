@@ -19,7 +19,7 @@ class BlogContent extends Component {
                         <h1>{article.title}</h1>
                     </header>
                     <div>
-                        <pre>{article.content}</pre>
+                        <pre className="blog-post-content">{article.content}</pre>
                     </div>
                 </div>
                 

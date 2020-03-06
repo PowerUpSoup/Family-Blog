@@ -10,7 +10,7 @@ class Home extends Component {
             <div>
                 <main role="main">
                     <header role="banner">
-                        <h1>How to Stop Smiling.<br/>A blog</h1>
+                        <h1>How to Stop Smiling.<br/>A blog.</h1>
                     </header>
                     <div className="Writer-Menu">
                         {this.context.users.map((user, key) => {
@@ -22,7 +22,7 @@ class Home extends Component {
                         })}
                     </div>
                 </main>
-                <footer>Footer</footer>
+                
             </div>
         )
     }

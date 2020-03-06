@@ -103,14 +103,14 @@ class LoginPage extends React.Component {
                         </div>
                         <div className="create-password-first">
                             <label >Enter Password:</label>
-                            <input type="text"
+                            <input type="password"
                                 name="create-password-first"
                                 placeholder="Your Password"
                                 ref="createPasswordFirst"
                                 required />
                             <br />
                             <label >Re-Enter Password:</label>
-                            <input type="text"
+                            <input type="password"
                                 name="create-password-second"
                                 placeholder="Don't use 'password'"
                                 ref="createPasswordSecond"

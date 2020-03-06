@@ -1,77 +1,114 @@
-* {
-  box-sizing: border-box;
-}
-
-body {
-  font-family: "Open Sans",
-  sans-serif; 
+.App {
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
   font-size: 20px;
   color: #444;
   text-align: center;
   line-height: 1.5;
 }
 
-nav,
-footer {
-  padding: 1% 0;
-  background-color: #aaa;
-}
 
-nav {
-  position: fixed;
+
+.App_nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  background-color: #323e4e;
+  position: static;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 10;
+  height: 50px;
 }
 
-.newBlogPost_div {
-  margin-top: 40px;
+.App_nav a {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: powderblue;
+  text-decoration: none;
 }
 
-
-
-header {
-  padding: 12% 0;
+.App_nav a:hover {
+  color: yellow;
+  transition: color 0.6s ease;
 }
 
-section {
-  min-height: 200px;
-  padding: 6% 0;
-  background-color: #bbb;
+.App_footer{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2.5rem;
+  background-color: #323e4e;
+  color: powderblue;
 }
 
-section:nth-child(even) {
-  background-color: #ddd;
+/* .App_main {
+  
+} */
+
+main header {
+  margin: 100;
+  background-color: #bed4df
 }
 
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.banner, h1 {
+  margin: 0;
   color: white;
+  padding-top: 40px;
+  padding-bottom: 40px;
 }
 
-.App-link {
-  color: #61dafb;
+.Writer-Menu {
+  padding-top: 20px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.writer_name {
+  font-size: 26px;
+  font-weight: 300;
+  color: #323e4e;
+  font-family: Raleway, Arial, Helvetica, sans-serif;
+}
+
+.writer__menu__article__list {
+  padding: 0px;
+}
+
+.Writer-Menu li {
+  list-style: none;
+  
+  
+}
+
+.Writer-Menu li a {
+  text-decoration: none;
+  color: darkblue;
+
+}
+
+.Writer-Menu li a:hover {
+  text-decoration: underline;
+}
+
+.Writer-Menu li a:visited {
+  color: rgb(75, 75, 209);
+}
+
+.title_div {
+  padding-top: 20px;
+  border-width: 2px;
+}
+
+.content_div_input {
+  border-width: 2px;
+}
+
+.blog-post-content {
+  width: 100%;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.create-comment-input {
+  width: 180px;
 }

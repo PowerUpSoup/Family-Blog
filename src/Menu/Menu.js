@@ -12,8 +12,8 @@ class Menu extends Component {
     render() {
         return (
             <div className="writer__menu">
-                <label>{this.capitalizeFirstLetter(this.props.user.name)}</label>
-                <ul>
+                <label className="writer_name">{this.capitalizeFirstLetter(this.props.user.name)} </label>
+                <ul className="writer__menu__article__list">
                     {this.context.articles.map((article, key) => {
                         if (this.props.user.id === article.authorid) {
                             return (

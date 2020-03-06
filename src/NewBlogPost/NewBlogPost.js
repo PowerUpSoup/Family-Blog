@@ -55,6 +55,7 @@ class NewBlogPost extends Component {
                         <div className="title_div">
                             <label>Blog title</label>
                             <input type="text"
+                                className="title_div_input"
                                 name="blog_title"
                                 placeholder="'My Next Blog Post'"
                                 ref="blogTitle"
@@ -64,6 +65,7 @@ class NewBlogPost extends Component {
                         <div className="content_div">
                             <label>Content</label>
                             <textarea
+                                className="content_div_input"
                                 name="content"
                                 rows="15"
                                 ref="blogContent"

@@ -79,8 +79,6 @@ class App extends Component {
     })
   }
 
-
-
   renderNewBlogPostNavButton() {
     if ((this.state.isLoggedIn) && (this.state.loggedInUser.writer)) {
       return <Link to='/new-blog-post'>New blog post     </Link>
@@ -101,8 +99,6 @@ class App extends Component {
       addNewUser: this.addNewUser,
       addBlogPost: this.addBlogPost
     }
-
-    console.log("userstate", this.state.loggedInUser, this.state.isLoggedIn)
 
     return (
       <ApiContext.Provider value={value}>

@@ -48,7 +48,6 @@ class NewBlogPost extends Component {
                 </header>
                 <section>
                     <form id="new-blog-post" onSubmit={(e) => {
-                        debugger
                         this.handleSubmitNewBlog(e)
                     }}>
                         {console.log("context", this.context)}
